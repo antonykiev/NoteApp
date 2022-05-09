@@ -8,4 +8,11 @@ sealed class NoteOrder(val orderType: OrderType) {
 
     class Color(orderType: OrderType): NoteOrder(orderType)
 
+    fun copy(orderType: OrderType): NoteOrder {
+        return when (this) {
+            is Color -> Title(orderType)
+            is Date -> Date(orderType)
+            is Title -> Title(orderType)
+        }
+    }
 }
