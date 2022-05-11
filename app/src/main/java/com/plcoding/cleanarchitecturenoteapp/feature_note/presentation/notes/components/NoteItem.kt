@@ -31,16 +31,18 @@ fun NoteItem(
     cutCornerSize: Dp = 30.dp,
     onDeleteClick: () -> Unit
 ) {
-
-    Box(modifier = modifier) {
+    Box(
+        modifier = modifier
+    ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val clipPath = Path().apply {
-                lineTo(size.width - cornerRadius.toPx(), 0F)
+                lineTo(size.width - cutCornerSize.toPx(), 0f)
                 lineTo(size.width, cutCornerSize.toPx())
                 lineTo(size.width, size.height)
-                lineTo(0F, size.height)
+                lineTo(0f, size.height)
                 close()
             }
+
             clipPath(clipPath) {
                 drawRoundRect(
                     color = Color(note.color),
@@ -49,12 +51,10 @@ fun NoteItem(
                 )
                 drawRoundRect(
                     color = Color(
-                        ColorUtils.blendARGB(
-                            note.color, 0x000000, 0.2F
-                        )
+                        ColorUtils.blendARGB(note.color, 0x000000, 0.2f)
                     ),
-                    topLeft = Offset(size.width - cutCornerSize.toPx(), -100F),
-                    size = Size(cutCornerSize.toPx() + 100, cutCornerSize.toPx() + 100),
+                    topLeft = Offset(size.width - cutCornerSize.toPx(), -100f),
+                    size = Size(cutCornerSize.toPx() + 100f, cutCornerSize.toPx() + 100f),
                     cornerRadius = CornerRadius(cornerRadius.toPx())
                 )
             }
@@ -64,7 +64,6 @@ fun NoteItem(
                 .fillMaxSize()
                 .padding(16.dp)
                 .padding(end = 32.dp)
-
         ) {
             Text(
                 text = note.title,
@@ -73,27 +72,24 @@ fun NoteItem(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            Spacer(
-                modifier = Modifier.height(8.dp)
-            )
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = note.content,
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface,
                 maxLines = 10,
                 overflow = TextOverflow.Ellipsis
             )
-            IconButton(
-                onClick = onDeleteClick,
-                modifier = Modifier.align(Alignment.End)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Deletenote"
-                )
-            }
-
+        }
+        IconButton(
+            onClick = onDeleteClick,
+            modifier = Modifier.align(Alignment.BottomEnd)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = "Delete note",
+                tint = MaterialTheme.colors.onSurface
+            )
         }
     }
-
 }
